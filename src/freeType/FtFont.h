@@ -62,7 +62,12 @@ public:
         if (FT_IS_SCALABLE(face))
         {
             /* Set the character size and use default DPI (72) */
-            error = FT_Set_Pixel_Sizes(face, ptsize, ptsize);
+            FT_Size_RequestRec  req;
+            req.type = FT_SIZE_REQUEST_TYPE_REAL_DIM;
+            req.width = 0;
+            req.height = ptsize * 64;
+            req.horiResolution = req.vertResolution = 72;
+            error = FT_Request_Size(face, &req);
             if (error) {
                 FT_Done_Face(face);
                 throw Exception("Couldn't set font size", error);

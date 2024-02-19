@@ -122,9 +122,9 @@ std::vector<Config::Size> App::arrangeGlyphs(Glyphs& glyphs, const Config& confi
                 maxY = y + r.height;
         }
         if (config.cropTexturesWidth)
-            lastSize.w = maxX;
+            lastSize.w = std::min((maxX + 7) & ~7, lastSize.w);
         if (config.cropTexturesHeight)
-            lastSize.h = maxY;
+            lastSize.h = std::min((maxY + 7) & ~7, lastSize.h);
 
         result.push_back(lastSize);
     }

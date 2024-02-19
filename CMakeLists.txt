@@ -1,11 +1,16 @@
 cmake_minimum_required(VERSION 3.0)
 project(fontbm)
 
+if(FREETYPE_LIBRARIES)
+include_directories(${FREETYPE_INCLUDE_DIR})
+else()
 find_package(Freetype REQUIRED)
 include_directories(${FREETYPE_INCLUDE_DIRS})
+endif()
+
 
 if(NOT MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic")
+    add_compile_options(-std=c++11 -Wall -Wextra -pedantic)
 endif(NOT MSVC)
 
 set(SOURCES
